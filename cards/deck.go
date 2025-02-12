@@ -1,6 +1,10 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"strings"
+)
 
 type deck []string
 
@@ -28,4 +32,14 @@ func (d deck) print() {
 
 func deal(d deck, handSize int) (deck, deck) {
 	return d[:handSize], d[handSize:]
+}
+
+func (d deck) toBytseSlice() []byte {
+	stringDeck := strings.Join([]string(d), ",")
+	byteDeck := []byte(stringDeck)
+	return byteDeck
+}
+
+func (d deck) saveToFile(fileName string) error {
+	return os.WriteFile(fileName, d.toBytseSlice(), 0666)
 }
