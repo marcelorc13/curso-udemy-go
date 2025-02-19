@@ -43,3 +43,13 @@ func (d deck) toBytseSlice() []byte {
 func (d deck) saveToFile(fileName string) error {
 	return os.WriteFile(fileName, d.toBytseSlice(), 0666)
 }
+
+func newDeckFromFile(filename string) deck {
+	bs, err := os.ReadFile(filename)
+	if err != nil {
+		fmt.Println("Error: ", err)
+		os.Exit(1)
+	}
+	s := strings.Split(string(bs), ",")
+	return deck(s)
+}
